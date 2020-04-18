@@ -1,0 +1,60 @@
+ # READS THE DATA INTO OUR ENVIRONMENT
+> dataOne = read.csv("data.csv", header=TRUE, stringsAsFactors=FALSE)
+> # CREATES VARIABLE NAMES FOR EASY REFERENCE
+> Year <- dataOne$Year
+> Population <- dataOne$Population
+> # PRINTS THE CLASSES OF OUR INDEPENDENT AND DEPENDENT VARIABLES
+> print(class(Population))
+[1] "numeric"
+> print(class(Year))
+[1] "numeric"
+> # DISPLAYS THE FIRST TEN ROWS OF OUR CSV FILE
+> head(dataOne, 10)
+  Year Population
+1 0.00    6724545
+2 0.25    6743226
+3 1.25    6822520
+4 2.25    6895226
+5 3.25    6968006
+6 4.25    7054196
+7 5.25    7160290
+8 6.25    7288000
+> # CREATES A LINEAR REGRESSION MODEL TITLED "lm1"
+> lm1 <- lm(Population~Year)
+> # SUMMARIZES lm1
+> summary(lm1)
+
+Call:
+lm(formula = Population ~ Year)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-24554 -13819   -768  11525  36096 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  6710798      12949  518.26 3.48e-15 ***
+Year           86577       3628   23.87 3.55e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 22140 on 6 degrees of freedom
+Multiple R-squared:  0.9896,	Adjusted R-squared:  0.9878 
+F-statistic: 569.6 on 1 and 6 DF,  p-value: 3.553e-07
+
+> lm1$coefficients
+(Intercept)        Year 
+ 6710797.97    86576.93 
+> # This predicts July 1, 2024
+> newData = data.frame(Year=14.25)
+> predict(lm1, newData, interval="predict")
+      fit     lwr     upr
+1 7944519 7828110 8060928
+> # PLOTS lm1
+> plot(Population ~ Year,
++      xlab = "Years Since Base Year",
++      ylab = "Population",
++      main = "Washington State Population"
++ )
+> 
+> abline(lm1, col = "red") # (lwd will adjust the thickness of the abline)
