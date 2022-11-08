@@ -1,0 +1,89 @@
+---
+title: "API Calls in R"
+author: "Trevor French"
+format: html
+editor: visual
+---
+
+## Install Packages
+
+``` r
+install.packages(c('httr', 'jsonlite'))
+```
+
+## Require Packages
+
+```{r}
+library('httr')
+library('jsonlite')
+```
+
+## Make Request
+
+Pass a URL into the 'GET' function and store the response in a variable called 'res'.
+
+```{r}
+res = GET("https://api.helium.io/v1/stats")
+print(res)
+```
+
+## Parse & Explore Data
+
+Use the 'fromJSON' function from the 'jsonlite' package to parse the response data and then print out the names in the resulting data set.
+
+```{r}
+data = fromJSON(rawToChar(res$content))
+
+names(data)
+```
+
+Go one level deeper into the data set and print out the names again.
+
+```{r}
+data = data$data
+
+names(data)
+```
+
+Alternatively, you can loop through the names as follows.
+
+```{r}
+for (name in names(data)){print(name)}
+```
+
+Get the 'token_supply' field from the data.
+
+```{r}
+token_supply = data$token_supply
+
+print(token_supply)
+```
+
+## Adding Parameters to Requests
+
+Add 'min_time' and 'max_time' as parameters on a different endpoint and print the resulting 'fee' data.
+
+```{r}
+res = GET("https://api.helium.io/v1/dc_burns/sum",
+    query = list(min_time = "2020-07-27T00:00:00Z"
+                 , max_time = "2021-07-27T00:00:00Z"))
+
+data = fromJSON(rawToChar(res$content))
+fee = data$data$fee
+print(fee)
+```
+
+## Adding Headers to Requests
+
+Execute the same query as above except this time specify headers. This will likely be necessary when working with an API which requires an API Key.
+
+```{r}
+res = GET("https://api.helium.io/v1/dc_burns/sum",
+    query = list(min_time = "2020-07-27T00:00:00Z"
+                 , max_time = "2021-07-27T00:00:00Z"),
+    add_headers(`Accept`='application/json', `Connection`='keep-live'))
+
+data = fromJSON(rawToChar(res$content))
+fee = data$data$fee
+print(fee)
+```
