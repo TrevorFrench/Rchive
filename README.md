@@ -1,2 +1,5 @@
-# R_Projects
-This is a repository of my recent projects created with R.
+# Rchive
+
+A collection of R scripts and projects acuumulated throughout the years.
+
+How to navigate this repository:
