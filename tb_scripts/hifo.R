@@ -1,6 +1,6 @@
-#TRANSFERS ARE NOT TAXABLE
+# TRANSFERS ARE NOT TAXABLE
 # USD is not a disposition
-#Can't dispose of an asset before it is acquired
+# Can't dispose of an asset before it is acquired
 library(dplyr)
 library(stringi)
 options(scipen=999)
@@ -63,7 +63,7 @@ for (asset in disposed_assets) {
     output[output_row, "COST_BASIS"] = quantity_disposed * in_calcs[i, "Spot"]
     
     i = if_else(balance <= 0, i + 1, i)
-    #i = 2
+    # i = 2
     while (balance < 0) {
       output_row = nrow(output) + 1
       
