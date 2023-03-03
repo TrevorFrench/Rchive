@@ -7,3 +7,5 @@ How to navigate this repository:
 - MCA
 - MS_Project_Three
 - tb_scripts
+
+Purpose:
