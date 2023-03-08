@@ -9,3 +9,5 @@ How to navigate this repository:
 - tb_scripts
 
 Purpose:
+- examples
+- backup
