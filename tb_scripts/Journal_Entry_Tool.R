@@ -1,3 +1,4 @@
+# tool for creating journal entries 
 #Clears environment
 rm(list = ls(all.names = TRUE))
 #-------------------------------------------------------------------------------
